@@ -1,0 +1,14 @@
+{
+  "name": "heard",
+  "owner": { "name": "Heard", "email": "hello@heard.dev" },
+  "metadata": { "description": "Heard for Claude Code: ask about your agent hours, compare with friends, invite one." },
+  "plugins": [
+    {
+      "name": "heard",
+      "source": "./plugins/heard",
+      "description": "Ask Claude how many hours your coding agents worked this month, see your Heard board, and invite a friend.",
+      "homepage": "https://heard.dev/connect",
+      "category": "productivity"
+    }
+  ]
+}

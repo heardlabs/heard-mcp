@@ -1,0 +1,23 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "dev.heard/heard",
+  "title": "Heard",
+  "description": "Your coding agents' hours this month, your friends board, and invites you approve.",
+  "websiteUrl": "https://heard.dev/connect",
+  "repository": { "url": "https://github.com/heardlabs/heard-mcp", "source": "github" },
+  "version": "1.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.heard.dev/v1/mcp/share",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer key from https://heard.dev/connect, written as: Bearer hgs_...",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
