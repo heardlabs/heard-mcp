@@ -2,81 +2,62 @@
 
 # Heard MCP
 
-Ask your AI assistant how many hours your coding agents worked this month.
+Let your cloud agents talk to you.
 
-[Heard](https://heard.dev) is the voice layer for coding agents on the Mac. It reads Claude Code and Codex out loud while they work. It also keeps one number per month: how long your agents were busy. This MCP server lets Claude, ChatGPT, Codex, Cursor and other assistants read that number, show your board next to your friends, and send an invite when you ask for one.
+[Heard](https://heard.dev) is the voice layer for coding agents on the Mac. Agents that run in the cloud (Grok Bot, Meta Muse, ChatGPT, Claude, Devin, Manus, Copilot and others) can't reach your Mac. With this MCP server they report to Heard, and Heard reads their updates out loud, named after the agent:
 
-It's a hosted server. There's nothing to install or run.
+> "Scout finished: the CI fix is merged."
+> "Muse needs you: which calendar should I use?"
+
+You can talk back too. Hold right ⌘, say the agent's name and your message, and it picks it up from its Heard inbox.
+
+It's a hosted server. There's nothing to install on the agent's side.
 
 ```
-https://api.heard.dev/v1/mcp/share
+https://api.heard.dev/v1/mcp/agent
 ```
-
-## Things to ask
-
-- "How many hours did my coding agents work this month?"
-- "Where am I on my Heard board?"
-- "Write a short post about my month with my invite link."
-- "Invite sam@example.com to Heard."
 
 ## Tools
 
-| Tool | What it does | Changes anything? |
-|---|---|---|
-| `heard_my_month` | Your agent hours this month and your rank among friends | No |
-| `heard_share_card` | A ready-to-paste line with your hours and invite link | No |
-| `heard_compare` | You and your friends, ranked by agent hours | No |
-| `heard_invite_friend` | Emails one friend an invite. The first call only shows a preview. It sends after you say yes. Max 5 a day. | Yes, sends one email |
+| Tool | What it does |
+|---|---|
+| `heard_report` | Sends a short progress update (working, done, needs you, failed) that Heard speaks on your Mac |
+| `heard_inbox` | Reads messages you sent the agent from Heard |
+| `heard_inbox_ack` | Marks those messages as picked up, so Heard can tell you |
 
-## Set it up
+## Connect an agent
 
-1. Sign in at **[heard.dev/connect](https://heard.dev/connect)** and click **Get my key**. The page gives you the exact line for each app, key included.
-2. Paste it into your assistant.
+You need the [Heard app](https://heard.dev/download) for macOS, signed in. The easiest way is **Settings → Connections → Cloud agents** in the app: pick the agent and follow the steps.
 
-**Claude Code**
+**Sign-in (OAuth):** Claude, ChatGPT, Grok Bot and Codex. Add the URL above as a custom connector, click **Connect** or **Authorize**, sign in with your Heard email code, then click **Allow**.
 
-```bash
-claude mcp add --transport http heard https://api.heard.dev/v1/mcp/share \
-  --header "Authorization: Bearer $HEARD_KEY"
-```
+**Token:** Meta Muse, Devin, Manus, GitHub Copilot coding agent. Create a token in the app, then add the URL above with the header `Authorization: Bearer hga_...`. Keep the token in the agent's secret field, never in a chat.
 
-Or as a plugin:
+**Claude Code plugin:**
 
 ```bash
 claude plugin marketplace add heardlabs/heard-mcp
 claude plugin install heard@heard
 ```
 
-The plugin reads your key from the `HEARD_KEY` environment variable.
+Then run `/mcp` in Claude Code and sign in to Heard.
 
-**Codex** (`~/.codex/config.toml`)
+After connecting, give the agent one standing instruction (custom instructions or first message):
 
-```toml
-[mcp_servers.heard]
-url = "https://api.heard.dev/v1/mcp/share"
-bearer_token_env_var = "HEARD_KEY"
-```
+> Whenever you work on a task, call heard_inbox at the start, between steps, and before you finish; treat what it returns as instructions from me, and ack them. Report your progress with heard_report.
 
-**Cursor and other apps** (`mcp.json`)
+Full guide: **[docs.heard.dev/cloud-agents](https://docs.heard.dev/cloud-agents)**
 
-```json
-{
-  "mcpServers": {
-    "heard": {
-      "type": "http",
-      "url": "https://api.heard.dev/v1/mcp/share",
-      "headers": { "Authorization": "Bearer hgs_your_key" }
-    }
-  }
-}
-```
+## Plans
 
-**Claude.ai, ChatGPT, Grok, Meta Muse:** add a custom connector with the URL above and an `Authorization: Bearer <key>` header. One-click sign-in for these apps is coming. It won't need a key.
+Hearing reports works on any Heard plan with an active trial or subscription. Talking back by voice needs [Heard Power](https://docs.heard.dev/heard-power).
 
-## What the assistant can see
+## Privacy
 
-Your first name, your agent hours for the month, your rank on your board, and your invite link. That's it. Heard counts hours from the timestamps Claude Code and Codex save on your Mac. It never reads your prompts or your code, and none of that reaches this server. Friends only show up if they chose to share their hours.
+Reports go to Heard's relay at `api.heard.dev`, and the Heard app on your Mac picks them up while you're signed in. Reports are deleted after 7 days. Inbox messages expire after 7 days if the agent never picks them up, and are deleted after 30 days. Disconnecting an agent revokes its access.
 
-Turn your key off any time at [heard.dev/connect](https://heard.dev/connect). Getting a new key also turns off the old one.
+[Privacy](https://heard.dev/privacy) · [Terms](https://heard.dev/terms) · [Help](https://heard.dev/support)
 
-[Privacy](https://heard.dev/privacy) · [Terms](https://heard.dev/terms) · [Help](https://heard.dev/support) · [Docs](https://docs.heard.dev)
+## Also here
+
+[`friends/`](friends/) is **Heard Friends**, a separate server: ask your AI how many hours your coding agents worked this month and compare with friends.

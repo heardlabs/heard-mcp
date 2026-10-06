@@ -1,10 +1,20 @@
 {
   "name": "heard",
-  "version": "1.0.0",
-  "description": "Ask Claude how many hours your coding agents worked this month, see your Heard board, and invite a friend.",
-  "author": { "name": "Heard", "email": "hello@heard.dev", "url": "https://heard.dev" },
-  "homepage": "https://heard.dev/connect",
+  "version": "2.0.0",
+  "description": "Hear your cloud agents on your Mac: they report progress to Heard and pick up your replies.",
+  "author": {
+    "name": "Heard",
+    "email": "hello@heard.dev",
+    "url": "https://heard.dev"
+  },
+  "homepage": "https://docs.heard.dev/cloud-agents",
   "repository": "https://github.com/heardlabs/heard-mcp",
   "license": "MIT",
-  "keywords": ["heard", "agent hours", "leaderboard", "claude code", "codex"]
+  "keywords": [
+    "heard",
+    "voice",
+    "cloud agents",
+    "notifications",
+    "claude code"
+  ]
 }

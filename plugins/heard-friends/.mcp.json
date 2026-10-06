@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "heard": {
+      "type": "http",
+      "url": "https://api.heard.dev/v1/mcp/share",
+      "headers": { "Authorization": "Bearer ${HEARD_KEY}" }
+    }
+  }
+}
+
