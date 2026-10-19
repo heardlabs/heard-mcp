@@ -1,0 +1,42 @@
+# Publish server.json (dev.heard/heard) and friends/server.json (dev.heard/friends)
+# to the official MCP Registry. Run it from the Actions tab after bumping a version.
+# Uses the repo secret MCP_REGISTRY_KEY_PEM: the Ed25519 key whose public half is
+# served at heard.dev/.well-known/mcp-registry-auth.
+name: Publish to MCP Registry
+
+on:
+  workflow_dispatch:
+    inputs:
+      which:
+        description: "Which server to publish"
+        type: choice
+        options: [both, heard, friends]
+        default: both
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install mcp-publisher
+        run: |
+          curl -sL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+          ./mcp-publisher --version
+
+      - name: Log in with the heard.dev domain key
+        env:
+          KEY_PEM: ${{ secrets.MCP_REGISTRY_KEY_PEM }}
+        run: |
+          printf '%s\n' "$KEY_PEM" > key.pem
+          HEX=$(openssl pkey -in key.pem -noout -text | grep -A3 "priv:" | tail -n +2 | tr -d ' :\n')
+          rm key.pem
+          ./mcp-publisher login http --domain heard.dev --private-key "$HEX"
+
+      - name: Publish Heard
+        if: inputs.which != 'friends'
+        run: ./mcp-publisher publish server.json
+
+      - name: Publish Heard Friends
+        if: inputs.which != 'heard'
+        run: ./mcp-publisher publish friends/server.json
