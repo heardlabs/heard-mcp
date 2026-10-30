@@ -4,7 +4,7 @@
 
 Let your cloud agents talk to you.
 
-[Heard](https://heard.dev) is the voice layer for coding agents on the Mac. Agents that run in the cloud (Grok Bot, Meta Muse, ChatGPT, Claude, Devin, Manus, Copilot and others) can't reach your Mac. With this MCP server they report to Heard, and Heard reads their updates out loud, named after the agent:
+[Heard](https://heard.dev) is the voice context layer for agents on the Mac. Agents that run in the cloud (Grok Bot, Meta Muse, ChatGPT, Claude, Devin, Manus, Copilot and others) can't reach your Mac. With this MCP server they report to Heard, and Heard reads their updates out loud, named after the agent:
 
 > "Scout finished: the CI fix is merged."
 > "Muse needs you: which calendar should I use?"

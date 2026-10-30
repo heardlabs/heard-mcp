@@ -4,7 +4,7 @@
 
 Ask your AI assistant how many hours your coding agents worked this month.
 
-[Heard](https://heard.dev) is the voice layer for coding agents on the Mac. It reads Claude Code and Codex out loud while they work. It also keeps one number per month: how long your agents were busy. This MCP server lets Claude, ChatGPT, Codex, Cursor and other assistants read that number, show your board next to your friends, and send an invite when you ask for one.
+[Heard](https://heard.dev) is the voice context layer for agents on the Mac. It reads Claude Code and Codex out loud while they work. It also keeps one number per month: how long your agents were busy. This MCP server lets Claude, ChatGPT, Codex, Cursor and other assistants read that number, show your board next to your friends, and send an invite when you ask for one.
 
 It's a hosted server. There's nothing to install or run.
 
